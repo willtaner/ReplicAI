@@ -1,6 +1,11 @@
 import os
+import re
+import nltk
 import docx
 import PyPDF2
+
+nltk.download('punkt')
+from nltk.tokenize import sent_tokenize
 
 def parse_txt(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -17,6 +22,11 @@ def parse_pdf(file_path):
         for page in reader.pages:
             text += page.extract_text()
     return text
+
+def clean_text(text):
+    text = re.sub(r'\s+', ' ', text)
+    sentences = sent_tokenize(text)
+    return sentences
 
 def parse_documents(data_dir):
 
